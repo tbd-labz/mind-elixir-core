@@ -69,7 +69,6 @@ export const shapeTpc = function (tpc: Topic, nodeObj: NodeObj) {
       button.onclick = () => action.callback(nodeObj)
       button.className = action.className ?? ''
       button.textContent = action.text
-      button.textContent = action.text
       actionContainer.append(button)
     })
     actionContainer.className = 'actions flex space-x-2'
