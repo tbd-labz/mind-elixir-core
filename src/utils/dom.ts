@@ -64,16 +64,18 @@ export const shapeTpc = function (tpc: Topic, nodeObj: NodeObj) {
 
   if (nodeObj.actions?.length) {
     const actionContainer = $d.createElement('div')
-    nodeObj.actions?.forEach(action => {
+    actionContainer.className = 'actions flex space-x-2'
+    actionContainer.style.justifyContent = 'flex-end'
+    actionContainer.style.marginTop = '5px'
+
+    nodeObj.actions.forEach(action => {
       const button = $d.createElement('button')
       button.onclick = () => action.callback(nodeObj)
       button.className = action.className ?? ''
       button.textContent = action.text
       actionContainer.append(button)
     })
-    actionContainer.className = 'actions flex space-x-2'
-    actionContainer.style.justifyContent = 'flex-end'
-    actionContainer.style.marginTop = '5px'
+
     tpc.append(actionContainer)
   }
 
