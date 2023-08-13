@@ -1,5 +1,5 @@
-import type { Topic, Wrapper, Parent, Children, CustomSvg } from './dom'
-import type { MindElixirInstance, MindElixirData, NodeObj, LinkItem } from './index'
+import type { Children, CustomSvg, Parent, Topic, Wrapper } from './dom'
+import type { LinkItem, MindElixirData, MindElixirInstance, NodeObj } from './index'
 
 export type Init = (this: MindElixirInstance, data: MindElixirData) => void
 export type CreateInputDiv = (this: MindElixirInstance, el: Topic) => void
@@ -33,7 +33,12 @@ export type ReshapeNode = (this: MindElixirInstance, tpc: Topic, patchData: Node
 export type Layout = (this: MindElixirInstance) => void
 export type LayoutChildren = (this: MindElixirInstance, data: NodeObj[], container?: Children, direction?: number) => Children
 export type LinkDiv = (this: MindElixirInstance, mainNode?: Wrapper) => void
-export type TraverseChildrenFunc = (children: HTMLCollection, parent: Parent, isFirst?: boolean) => string
+export type TraverseChildrenFunc = (
+  children: HTMLCollection,
+  parent: Parent,
+  paths: Map<string, string[]>,
+  isFirst?: boolean
+) => Map<string, string[]>
 export type JudgeDirection = (this: MindElixirInstance, mainNode: Wrapper, obj: NodeObj) => void
 
 export type CreateLink = (this: MindElixirInstance, from: Topic, to: Topic, isInitPaint?: boolean, linkObj?: LinkItem) => void

@@ -1,65 +1,65 @@
-import { LEFT, RIGHT, SIDE, GAP, MAIN_NODE_HORIZONTAL_GAP, MAIN_NODE_VERTICAL_GAP, DARK_THEME, THEME } from './const'
-import { isMobile, fillParent, getObjById, generateUUID, generateNewObj } from './utils/index'
-import { findEle, createInputDiv, createWrapper, createParent, createChildren, createTopic } from './utils/dom'
-import { layout, layoutChildren, judgeDirection } from './utils/layout'
-import { createLinkSvg, createLine } from './utils/svg'
+import { DARK_THEME, GAP, LEFT, MAIN_NODE_HORIZONTAL_GAP, MAIN_NODE_VERTICAL_GAP, RIGHT, SIDE, THEME } from './const'
+import { createLink, hideLinkController, removeLink, selectLink, showLinkController } from './customLink'
 import {
-  selectNode,
-  unselectNode,
-  selectNextSibling,
-  selectPrevSibling,
-  selectFirstChild,
-  selectParent,
-  getDataString,
+  cancelFocus,
+  disableEdit,
+  enableEdit,
+  expandNode,
+  focusNode,
   getData,
   getDataMd,
-  scale,
-  toCenter,
-  focusNode,
-  cancelFocus,
+  getDataString,
   initLeft,
   initRight,
   initSide,
-  setLocale,
-  enableEdit,
-  disableEdit,
-  expandNode,
-  refresh,
   install,
+  refresh,
+  scale,
+  selectFirstChild,
+  selectNextSibling,
+  selectNode,
+  selectParent,
+  selectPrevSibling,
+  setLocale,
+  toCenter,
+  unselectNode,
 } from './interact'
-import {
-  insertSibling,
-  insertBefore,
-  insertParent,
-  addChild,
-  copyNode,
-  moveNode,
-  removeNode,
-  moveUpNode,
-  moveDownNode,
-  beginEdit,
-  reshapeNode,
-  setNodeTopic,
-  moveNodeBefore,
-  moveNodeAfter,
-} from './nodeOperation'
-import { createLink, removeLink, selectLink, hideLinkController, showLinkController } from './customLink'
 import linkDiv from './linkDiv'
 import initMouseEvent from './mouse'
+import {
+  addChild,
+  beginEdit,
+  copyNode,
+  insertBefore,
+  insertParent,
+  insertSibling,
+  moveDownNode,
+  moveNode,
+  moveNodeAfter,
+  moveNodeBefore,
+  moveUpNode,
+  removeNode,
+  reshapeNode,
+  setNodeTopic,
+} from './nodeOperation'
+import { createChildren, createInputDiv, createParent, createTopic, createWrapper, findEle } from './utils/dom'
+import { fillParent, generateNewObj, generateUUID, getObjById, isMobile } from './utils/index'
+import { judgeDirection, layout, layoutChildren } from './utils/layout'
+import { createLine, createLinkSvg } from './utils/svg'
 
 import contextMenu from './plugin/contextMenu'
-import toolBar from './plugin/toolBar'
-import nodeDraggable from './plugin/nodeDraggable'
 import keypress from './plugin/keypress'
 import mobileMenu from './plugin/mobileMenu'
+import nodeDraggable from './plugin/nodeDraggable'
 import operationHistory from './plugin/operationHistory'
+import toolBar from './plugin/toolBar'
 
 import Bus from './utils/pubsub'
 
-import './index.less'
 import './iconfont/iconfont.js'
-import type { MindElixirData, MindElixirInstance, Options } from './types/index'
+import './index.less'
 import type { Children } from './types/dom'
+import type { MindElixirData, MindElixirInstance, Options } from './types/index'
 import { changeTheme } from './utils/theme'
 
 export * from './types/index'

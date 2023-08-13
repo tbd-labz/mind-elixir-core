@@ -1,9 +1,9 @@
-import { createPath, createMainPath, createLinkSvg } from './utils/svg'
-import { findEle } from './utils/dom'
-import { SIDE, GAP, TURNPOINT_R } from './const'
-import type { Wrapper, Topic, Expander, Parent } from './types/dom'
+import { GAP, SIDE, TURNPOINT_R } from './const'
+import type { Expander, Parent, Topic, Wrapper } from './types/dom'
 import type { LinkDiv, TraverseChildrenFunc } from './types/function'
 import type { MainLineParams, SubLineParams } from './types/linkDiv'
+import { findEle } from './utils/dom'
+import { createLinkSvg, createMainPath, createPath } from './utils/svg'
 let genPath: typeof generateSubLine1 = generateSubLine1
 /**
  * Link nodes with svg,
@@ -153,8 +153,14 @@ const linkDiv: LinkDiv = function (mainNode) {
       el.appendChild(svg)
       const parent = el.children[0] as Parent
       const children = el.children[1].children
-      const path = traverseChildren(children, parent, true)
-      svg.appendChild(createPath(path, branchColor))
+      const pathsMap = new Map<string, string[]>()
+      traverseChildren(children, parent, pathsMap, true)
+
+      for (const [nodeId, paths] of pathsMap.entries()) {
+        paths.forEach(path => {
+          svg.appendChild(createPath(path, branchColor, nodeId))
+        })
+      }
     }
   }
 
@@ -168,8 +174,9 @@ const linkDiv: LinkDiv = function (mainNode) {
 }
 
 // core function of generate subLines
-const traverseChildren: TraverseChildrenFunc = function (children, parent, isFirst) {
-  let path = ''
+const traverseChildren: TraverseChildrenFunc = function (children, parent, pathmap: Map<string, string[]>, isFirst) {
+  const path = ''
+
   const pT = parent.offsetTop
   const pL = parent.offsetLeft
   const pW = parent.offsetWidth
@@ -182,9 +189,16 @@ const traverseChildren: TraverseChildrenFunc = function (children, parent, isFir
     const cW = childT.offsetWidth
     const cH = childT.offsetHeight
     const direction = child.offsetParent.className
+    const tpc = parent.querySelector<Topic>('me-tpc')
 
-    path += genPath({ pT, pL, pW, pH, cT, cL, cW, cH, direction, isFirst })
+    if (pathmap.has(tpc!.nodeObj.id)) {
+      pathmap.get(tpc!.nodeObj.id)?.push(genPath({ pT, pL, pW, pH, cT, cL, cW, cH, direction, isFirst }))
+    } else {
+      pathmap.set(tpc!.nodeObj.id, [genPath({ pT, pL, pW, pH, cT, cL, cW, cH, direction, isFirst })])
+    }
 
+    // path += genPath({ pT, pL, pW, pH, cT, cL, cW, cH, direction, isFirst })
+    // paths.push(genPath({ pT, pL, pW, pH, cT, cL, cW, cH, direction, isFirst }))
     const expander = childT.children[1] as Expander
     if (expander) {
       expander.style.bottom = -(expander.offsetHeight / 2) + 'px'
@@ -202,10 +216,10 @@ const traverseChildren: TraverseChildrenFunc = function (children, parent, isFir
 
     const nextChildren = child.children[1].children
     if (nextChildren.length > 0) {
-      path += traverseChildren(nextChildren, childT)
+      traverseChildren(nextChildren, childT, pathmap, false)
     }
   }
-  return path
+  return pathmap
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#path_commands

@@ -29,13 +29,17 @@ export const createLine = function (x1: number, y1: number, x2: number, y2: numb
   return line
 }
 
-export const createPath = function (d: string, color: string) {
+export const createPath = function (d: string, color: string, nodeId?: string) {
   const path = $d.createElementNS(svgNS, 'path')
   path.setAttribute('d', d)
   path.setAttribute('stroke', color || '#555')
   path.setAttribute('fill', 'none')
   path.setAttribute('stroke-linecap', 'square')
   path.setAttribute('stroke-width', '2')
+
+  if (nodeId) {
+    path.setAttribute('nodeId', nodeId)
+  }
   return path
 }
 

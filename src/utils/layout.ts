@@ -1,6 +1,6 @@
 import { LEFT, RIGHT, SIDE } from '../const'
 import type { Children } from '../types/dom'
-import type { Layout, LayoutChildren, JudgeDirection } from '../types/function'
+import type { JudgeDirection, Layout, LayoutChildren } from '../types/function'
 import { createExpander, shapeTpc } from './dom'
 
 const $d = document
@@ -37,6 +37,14 @@ export const layout: Layout = function () {
       }
     })
   }
+  tpc.addEventListener('mouseenter', () => {
+    this.bus.fire('mouseenter-node', tpc)
+  })
+
+  tpc.addEventListener('mouseleave', () => {
+    this.bus.fire('mouseleave-node', tpc)
+  })
+
   this.layoutChildren(mainNodes, this.mainNodes, this.direction)
   console.timeEnd('layout')
 }
@@ -72,6 +80,14 @@ export const layoutChildren: LayoutChildren = function (data, container, directi
       }
     }
     const top = this.createParent(nodeObj)
+    top.firstChild.addEventListener('mouseenter', () => {
+      this.bus.fire('mouseenter-node', top.firstChild)
+    })
+
+    top.firstChild.addEventListener('mouseleave', () => {
+      this.bus.fire('mouseleave-node', top.firstChild)
+    })
+
     if (nodeObj.children && nodeObj.children.length > 0) {
       top.appendChild(createExpander(nodeObj.expanded))
       grp.appendChild(top)
