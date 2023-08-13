@@ -1,37 +1,37 @@
 import type Bus from '../utils/pubsub'
 import type { changeTheme } from '../utils/theme'
-import type { Topic, CustomSvg, Children } from './dom'
+import type { Children, CustomSvg, Topic } from './dom'
 import type {
-  Init,
-  CreateWrapper,
-  CreateParent,
-  CreateChildren,
-  CreateTopic,
-  LinkDiv,
-  JudgeDirection,
-  InsertNodeCommon,
-  CreateInputDiv,
-  LayoutChildren,
-  MoveNodeToCommon,
-  MoveNodeCommon,
-  RemoveNode,
-  TNodeCopy,
-  SetNodeTopic,
-  SelectNodeFunc,
   CommonSelectFunc,
-  SiblingSelectFunc,
-  GetDataStringFunc,
-  GetDataFunc,
-  ExpandNode,
-  RefreshFunc,
-  Layout,
-  RemoveLink,
-  SelectLink,
-  HideLinkController,
+  CreateChildren,
+  CreateInputDiv,
   CreateLink,
+  CreateParent,
+  CreateTopic,
+  CreateWrapper,
+  ExpandNode,
+  GetDataFunc,
+  GetDataStringFunc,
+  HideLinkController,
+  Init,
+  InsertNodeCommon,
+  JudgeDirection,
+  Layout,
+  LayoutChildren,
+  LinkDiv,
+  MoveNodeCommon,
+  MoveNodeToCommon,
+  RefreshFunc,
+  RemoveLink,
+  RemoveNode,
+  SelectLink,
+  SelectNodeFunc,
+  SetNodeTopic,
   ShowLinkController,
+  SiblingSelectFunc,
+  TNodeCopy,
 } from './function'
-import type { Scale, ToCenter, FocusNode, CancelFocus, InitLeft, InitRight, InitSide, SetLocale, EnableEdit, DisableEdit, Install } from './interact'
+import type { CancelFocus, DisableEdit, EnableEdit, FocusNode, InitLeft, InitRight, InitSide, Install, Scale, SetLocale, ToCenter } from './interact'
 
 export enum OperationType {
   moveNode = 'moveNode',
@@ -232,6 +232,12 @@ export interface Options {
   theme?: Theme
   nodeMenu?: boolean
 }
+export type ActionProps = {
+  text: string
+  className?: string
+  callback: (args: any) => void
+}
+
 export type Uid = string
 export interface NodeObj {
   topic: string
@@ -245,6 +251,7 @@ export interface NodeObj {
   children?: NodeObj[]
   tags?: string[]
   icons?: string[]
+  actions?: ActionProps[]
   hyperLink?: string
   expanded?: boolean
   direction?: number

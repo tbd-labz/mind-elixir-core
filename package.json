@@ -1,6 +1,6 @@
 {
-  "name": "mind-elixir",
-  "version": "2.1.0",
+  "name": "mind-elixir-tbd",
+  "version": "2.1.1",
   "description": "Mind elixir is a free open source mind map core.",
   "keywords": [
     "mind-elixir",
@@ -33,7 +33,7 @@
       "import": "./dist/example1.js",
       "require": "./dist/example1.js"
     },
-    "./readme.md": { 
+    "./readme.md": {
       "import": "./readme.md",
       "require": "./readme.md"
     }
@@ -92,7 +92,7 @@
     "url-loader": "^4.1.1",
     "webpack": "5.76.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "webpack-cli": "^4.9.2",
+    "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.7.4"
   }
 }

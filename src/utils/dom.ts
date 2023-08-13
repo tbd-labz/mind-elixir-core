@@ -1,6 +1,6 @@
 import { LEFT } from '../const'
-import type { Topic, Wrapper, Parent, Children, Expander } from '../types/dom'
-import type { CreateWrapper, CreateParent, CreateChildren, CreateTopic, CreateInputDiv } from '../types/function'
+import type { Children, Expander, Parent, Topic, Wrapper } from '../types/dom'
+import type { CreateChildren, CreateInputDiv, CreateParent, CreateTopic, CreateWrapper } from '../types/function'
 import type { MindElixirInstance, NodeObj } from '../types/index'
 import { encodeHTML } from '../utils/index'
 
@@ -60,6 +60,23 @@ export const shapeTpc = function (tpc: Topic, nodeObj: NodeObj) {
     tagsContainer.className = 'tags'
     tagsContainer.innerHTML = nodeObj.tags.map(tag => `<span>${encodeHTML(tag)}</span>`).join('')
     tpc.appendChild(tagsContainer)
+  }
+
+  if (nodeObj.actions?.length) {
+    const actionContainer = $d.createElement('div')
+    actionContainer.className = 'actions flex space-x-2'
+    actionContainer.style.justifyContent = 'flex-end'
+    actionContainer.style.marginTop = '5px'
+
+    nodeObj.actions.forEach(action => {
+      const button = $d.createElement('button')
+      button.onclick = () => action.callback(nodeObj)
+      button.className = action.className ?? ''
+      button.textContent = action.text
+      actionContainer.append(button)
+    })
+
+    tpc.append(actionContainer)
   }
 
   if (nodeObj.branchColor) {
